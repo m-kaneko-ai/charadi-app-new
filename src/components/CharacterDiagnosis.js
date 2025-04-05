@@ -542,7 +542,7 @@ export default function CharacterDiagnosis() {
               padding: '15px',
               borderTop: '1px dashed rgba(0,0,0,0.1)'
             }}>
-              <p style={{ marginBottom: '10px', fontSize: '0.9rem' }}>この結果をシェアする:</p>
+              <p style={{ marginBottom: '10px', fontSize: '0.9rem' }}>この診断アプリをシェアする:</p>
               <div style={{ display: 'flex', justifyContent: 'center', gap: '15px' }}>
                 <button 
                   onClick={() => {
@@ -598,10 +598,9 @@ export default function CharacterDiagnosis() {
                 </button>
                 <button 
                   onClick={() => {
-                    // 固定URLを使用（動的URLを避ける）
-                    const appUrl = "https://charadi-app-new-n1ns.vercel.app/";
-                    // シンプルなURL構築（テンプレートリテラルを避ける）
-                    window.open("https://social-plugins.line.me/lineit/share?url=" + encodeURIComponent(appUrl), "_blank");
+                    const text = `私は「${results[char].name.split('：')[0]}」タイプでした！`;
+                    const url = window.location.href;
+                    window.open(`https://social-plugins.line.me/lineit/share?url=${encodeURIComponent(url)}&text=${encodeURIComponent(text)}`, '_blank');
                   }}
                   style={{
                     backgroundColor: '#06C755',
