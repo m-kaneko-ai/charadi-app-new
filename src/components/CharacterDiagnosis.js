@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+﻿import React, { useState, useEffect } from "react";
 import { supabase } from '../lib/supabaseClient';
 
 // スタイルとアニメーションの追加
@@ -437,8 +437,7 @@ export default function CharacterDiagnosis() {
     }
   };
 
- 
-  // 診断結果表示時のログ保存（answers, topCharsを依存配列に追加）
+  // Log saving when displaying diagnosis results (add answers, topChars to dependency array)
   useEffect(() => {
     const saveLog = async () => {
       const { error } = await supabase.from('diagnostic_logs').insert([
@@ -457,8 +456,9 @@ export default function CharacterDiagnosis() {
       saveLog();
     }
   }, [finished, topChars, answers]);
-   // 質問未ロード時の表示
-   if (questions.length === 0) {
+
+  // 質問未ロード時の表示
+  if (questions.length === 0) {
     return <div>Loading...</div>;
   }
 
@@ -546,7 +546,6 @@ export default function CharacterDiagnosis() {
               <div style={{ display: 'flex', justifyContent: 'center', gap: '15px' }}>
                 <button 
                   onClick={() => {
-                    const text = `私は「${results[char].name.split('：')[0]}」タイプでした！`;
                     const url = window.location.href;
                     window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`, '_blank');
                   }}
@@ -573,7 +572,6 @@ export default function CharacterDiagnosis() {
                 </button>
                 <button 
                   onClick={() => {
-                    const text = `私は「${results[char].name.split('：')[0]}」タイプでした！`;
                     const url = window.location.href;
                     window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}&quote=${encodeURIComponent(text)}`, '_blank');
                   }}
@@ -600,9 +598,10 @@ export default function CharacterDiagnosis() {
                 </button>
                 <button 
                   onClick={() => {
-                    const text = `私は「${results[char].name.split('：')[0]}」タイプでした！`;
-                    const url = window.location.href;
-                    window.open(`https://social-plugins.line.me/lineit/share?url=${encodeURIComponent(url)}&text=${encodeURIComponent(text)}`, '_blank');
+                    // 固定URLを使用（動的URLを避ける）
+                    const appUrl = "https://charadi-app-new-n1ns.vercel.app/";
+                    // シンプルなURL構築（テンプレートリテラルを避ける）
+                    window.open("https://social-plugins.line.me/lineit/share?url=" + encodeURIComponent(appUrl), "_blank");
                   }}
                   style={{
                     backgroundColor: '#06C755',

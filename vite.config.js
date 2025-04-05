@@ -1,4 +1,4 @@
-import { defineConfig } from 'vite';
+﻿import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
 export default defineConfig({
@@ -9,6 +9,7 @@ export default defineConfig({
   },
   server: {
     port: 5173,
-    open: true
+    open: true,
+    hmr: { overlay: false }
   }
 });
