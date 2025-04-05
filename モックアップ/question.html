@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>キャラクター診断ツール</title>
+  <style>
+    body {
+      font-family: 'Hiragino Sans', 'Meiryo', sans-serif;
+      background-color: #f5f5f5;
+      color: #333;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 16px;
+      background-color: white;
+      min-height: 100vh;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .progress-outer {
+      height: 8px;
+      background-color: #e0e0e0;
+      border-radius: 4px;
+      margin-bottom: 24px;
+    }
+    .progress-inner {
+      height: 100%;
+      background-color: #3f51b5;
+      border-radius: 4px;
+      transition: width 0.3s;
+    }
+    .progress-text {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 8px;
+      font-size: 14px;
+    }
+    .question-card {
+      padding: 24px;
+      border-radius: 8px;
+      background-color: white;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+      margin-bottom: 24px;
+    }
+    .question-text {
+      font-size: 18px;
+      font-weight: 500;
+      margin-bottom: 24px;
+      line-height: 1.6;
+    }
+    .options-container {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .option-button {
+      padding: 16px;
+      border-radius: 8px;
+      border: 1px solid #e0e0e0;
+      background-color: white;
+      text-align: left;
+      font-size: 16px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .option-button:hover {
+      background-color: #f0f7ff;
+      border-color: #3f51b5;
+    }
+    .option-button.selected {
+      background-color: #3f51b5;
+      color: white;
+      border-color: #3f51b5;
+    }
+    .header {
+      text-align: center;
+      margin-bottom: 24px;
+    }
+    .title {
+      font-size: 20px;
+      font-weight: bold;
+      margin: 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1 class="title">キャラクター診断</h1>
+    </div>
+    
+    <!-- 進捗バー -->
+    <div class="progress-text">
+      <span>質問 1/16</span>
+      <span>6%</span>
+    </div>
+    <div class="progress-outer">
+      <div class="progress-inner" style="width: 6%;"></div>
+    </div>
+    
+    <!-- 質問カード -->
+    <div class="question-card">
+      <div class="question-text">
+        「どうせうまくいかない」と思って、最初から行動をあきらめることがある。
+      </div>
+      <div class="options-container">
+        <button class="option-button" onclick="this.classList.add('selected')">
+          かなり当てはまる
+        </button>
+        <button class="option-button" onclick="this.classList.add('selected')">
+          少し当てはまる
+        </button>
+        <button class="option-button" onclick="this.classList.add('selected')">
+          当てはまらない
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // シンプルな挙動だけ追加
+    document.querySelectorAll('.option-button').forEach(button => {
+      button.addEventListener('click', function() {
+        // 他の選択肢の選択状態を解除
+        document.querySelectorAll('.option-button').forEach(btn => {
+          btn.classList.remove('selected');
+        });
+        
+        // クリックした選択肢を選択状態に
+        this.classList.add('selected');
+        
+        // 少し遅延してから次の質問に進むような演出
+        setTimeout(() => {
+          alert("次の質問に進みます（モックアップのため、アラートで代用しています）");
+        }, 800);
+      });
+    });
+  </script>
+</body>
+</html>

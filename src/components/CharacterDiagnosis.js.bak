@@ -1,0 +1,139 @@
+import React, { useState, useEffect } from "react";
+
+// 16問の質問配列（originalQuestions）※ 各質問は後でランダムに表示されます
+const originalQuestions = [
+  // 既存の質問配列...（変更なし）
+];
+
+function shuffle(array) {
+  let currentIndex = array.length, randomIndex;
+  while (currentIndex !== 0) {
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex--;
+    [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
+  }
+  return array;
+}
+
+const results = {
+  // 既存のresults定義...（変更なし）
+};
+
+export default function CharacterDiagnosis() {
+  const [questions, setQuestions] = useState([]);
+  const [currentQ, setCurrentQ] = useState(0);
+  const [scores, setScores] = useState({});
+  const [finished, setFinished] = useState(false);
+  const [topChars, setTopChars] = useState([]);
+
+  useEffect(() => {
+    setQuestions(shuffle([...originalQuestions]));
+  }, []);
+
+  const handleAnswer = (scoresForOption) => {
+    const updatedScores = { ...scores };
+    for (const char in scoresForOption) {
+      updatedScores[char] = (updatedScores[char] || 0) + scoresForOption[char];
+    }
+    setScores(updatedScores);
+
+    if (currentQ + 1 < questions.length) {
+      setCurrentQ(currentQ + 1);
+    } else {
+      const maxScore = Math.max(...Object.values(updatedScores));
+      const top = Object.entries(updatedScores)
+        .filter(([_, v]) => v === maxScore)
+        .map(([k]) => k);
+      setTopChars(top);
+      setFinished(true);
+    }
+  };
+
+  if (questions.length === 0) {
+    return <div>Loading...</div>;
+  }
+
+  if (finished && topChars.length > 0) {
+    return (
+      <div className="container">
+        <div className="header">
+          <h1 style={{ 
+            fontSize: '2.5rem', 
+            fontWeight: 'bold', 
+            textAlign: 'center', 
+            margin: '1.5rem 0'
+          }}>診断結果</h1>
+        </div>
+        {topChars.map((char, i) => (
+          <div 
+            key={i} 
+            className="question-card" 
+            style={{ 
+              backgroundColor: results[char].cardColor, 
+              borderRadius: '12px', 
+              padding: '20px',
+              marginBottom: '20px'
+            }}
+          >
+            <h3 style={{
+              fontSize: '1.6rem',
+              fontWeight: 'bold',
+              borderBottom: '2px solid rgba(0,0,0,0.1)',
+              paddingBottom: '8px',
+              marginBottom: '16px'
+            }}>{results[char].name}</h3>
+            
+            <img
+              src={results[char].image}
+              alt={results[char].name}
+              style={{ 
+                maxWidth: '160px', 
+                maxHeight: '160px', 
+                width: 'auto', 
+                height: 'auto',
+                margin: '0 auto 16px',
+                display: 'block'
+              }}
+            />
+            
+            <div dangerouslySetInnerHTML={{ __html: results[char].description }} />
+          </div>
+        ))}
+      </div>
+    );
+  }
+
+  const q = questions[currentQ];
+  const progressPercent = Math.round(((currentQ + 1) / questions.length) * 100);
+
+  return (
+    <div className="container">
+      <div className="header">
+        <h1 className="title">8キャラセルフチェック </h1>
+      </div>
+      
+      <div className="progress-text">
+        <span>質問 {currentQ + 1}/{questions.length}</span>
+        <span>{progressPercent}%</span>
+      </div>
+      <div className="progress-outer">
+        <div className="progress-inner" style={{ width: `${progressPercent}%` }}></div>
+      </div>
+      
+      <div className="question-card">
+        <div className="question-text">{q.question}</div>
+        <div className="options-container">
+          {q.options.map((opt, i) => (
+            <button
+              key={i}
+              className="option-button"
+              onClick={() => handleAnswer(opt.scores)}
+            >
+              {opt.text}
+            </button>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
