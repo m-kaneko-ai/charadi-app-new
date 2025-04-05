@@ -1,6 +1,6 @@
 // src/Dashboard.jsx
 import React, { useEffect, useState } from 'react';
-import { supabase } from './supabaseClient';
+import { supabase } from '../lib/supabaseClient';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
 
 function Dashboard() {
