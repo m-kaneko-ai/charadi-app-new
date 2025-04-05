@@ -542,11 +542,10 @@ export default function CharacterDiagnosis() {
               padding: '15px',
               borderTop: '1px dashed rgba(0,0,0,0.1)'
             }}>
-              <p style={{ marginBottom: '10px', fontSize: '0.9rem' }}>この結果をシェアする:</p>
+              <p style={{ marginBottom: '10px', fontSize: '0.9rem' }}>この診断アプリをシェアする:</p>
               <div style={{ display: 'flex', justifyContent: 'center', gap: '15px' }}>
                 <button 
                   onClick={() => {
-                    const text = `私は「${results[char].name.split('：')[0]}」タイプでした！`;
                     const url = window.location.href;
                     window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`, '_blank');
                   }}
@@ -573,7 +572,6 @@ export default function CharacterDiagnosis() {
                 </button>
                 <button 
                   onClick={() => {
-                    const text = `私は「${results[char].name.split('：')[0]}」タイプでした！`;
                     const url = window.location.href;
                     window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}&quote=${encodeURIComponent(text)}`, '_blank');
                   }}
@@ -600,7 +598,6 @@ export default function CharacterDiagnosis() {
                 </button>
                 <button 
                   onClick={() => {
-                    const text = `私は「${results[char].name.split('：')[0]}」タイプでした！`;
                     const url = window.location.href;
                     window.open(`https://social-plugins.line.me/lineit/share?url=${encodeURIComponent(url)}&text=${encodeURIComponent(text)}`, '_blank');
                   }}
